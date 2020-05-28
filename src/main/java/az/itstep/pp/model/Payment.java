@@ -1,5 +1,6 @@
 package az.itstep.pp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,7 +16,9 @@ public class Payment {
     private String rrn;
     private LocalDateTime dateTime;
     private double amount;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subscription_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Subscription subscription;
 }
+

@@ -3,6 +3,7 @@ package az.itstep.pp.service;
 import az.itstep.pp.dto.PaymentRequestDto;
 import az.itstep.pp.model.Payment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PaymentService {
@@ -11,4 +12,5 @@ public interface PaymentService {
     List<Payment> findAll();
     void update(Payment payment);
     void deleteById(long id);
+    List<Payment> findInRange(LocalDate from,LocalDate to);
 }

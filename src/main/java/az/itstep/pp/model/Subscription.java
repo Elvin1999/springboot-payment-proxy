@@ -1,5 +1,6 @@
 package az.itstep.pp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,5 +19,6 @@ public class Subscription {
     private double balance;
     private LocalDateTime createdDate;
     @OneToMany(mappedBy = "subscription",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Payment> payments;
 }

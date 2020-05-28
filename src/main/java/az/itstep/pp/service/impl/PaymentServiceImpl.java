@@ -1,6 +1,7 @@
 package az.itstep.pp.service.impl;
 
 import az.itstep.pp.dto.PaymentRequestDto;
+import az.itstep.pp.exception.NotFoundException;
 import az.itstep.pp.mapper.PaymentRequestMapper;
 import az.itstep.pp.model.Payment;
 import az.itstep.pp.model.Subscription;
@@ -11,8 +12,12 @@ import az.itstep.pp.service.SubscriptionService;
 import az.itstep.pp.util.GenerationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 @Service
@@ -39,21 +44,29 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment findById(long id) {
-        return null;
+        return repo.findById(id).orElseThrow(()->new NotFoundException("No payment found for id : "+id));
     }
 
     @Override
     public List<Payment> findAll() {
-        return null;
+        return (List<Payment>) repo.findAll();
     }
 
     @Override
     public void update(Payment payment) {
-
+        repo.save(payment);
     }
 
     @Override
     public void deleteById(long id) {
+        repo.deleteById(id);
+    }
 
+    @Override
+    public List<Payment> findInRange(LocalDate from, LocalDate to) {
+        LocalDateTime from1 = from.atStartOfDay();
+        LocalDateTime to1 = to.atStartOfDay();
+        log.info("in service from {} to {}",from1,to1);
+        return repo.findInDateRange(from1, to1);
     }
 }
