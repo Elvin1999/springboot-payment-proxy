@@ -11,6 +11,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true,nullable = false)
     private String rrn;
     private LocalDateTime dateTime;
     private double amount;

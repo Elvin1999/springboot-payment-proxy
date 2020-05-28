@@ -49,13 +49,25 @@ public class SubscriptionResource {
         service.update(subscription);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    @GetMapping("/find")
+    @GetMapping("/agreement")
     public  ResponseEntity<Subscription> getByAgreement(@RequestParam(value = "agreement",required = true)
                                                                     String agreement ){
         log.info("Rest Request for subscription with agreement  : {}",agreement);
          Subscription subscription= service.findByAgreement(agreement);
          return  ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(subscription);
     }
+    @GetMapping("/balance")
+    public ResponseEntity<List<Subscription>> getByBalance(@RequestParam(value="from")
+                                                                 double from,@RequestParam(value="to") double to){
+        log.info("Rest request for subscription with balance from :{} to :{}",from,to);
+        List<Subscription> response=service.findInBalanceRange(from,to);
+
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+//    @GetMapping("/date")
+//    public ResponseEntity<List<Subscription>> getByDate(@RequestParam(value="year"))
+
+
 }
 
 

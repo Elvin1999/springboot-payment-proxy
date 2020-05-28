@@ -11,4 +11,6 @@ public interface SubscriptionService {
     void update(Subscription subscription);
     void deleteById(long id);
     Subscription findByAgreement(String agreement);
+    List<Subscription> findInBalanceRange(double from,double to);
+    void debit(double amount,String agreement);
 }

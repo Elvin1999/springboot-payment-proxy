@@ -54,4 +54,17 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public Subscription findByAgreement(String agreement) {
        return repo.getByAgreement(agreement);
     }
+
+    @Override
+    public List<Subscription> findInBalanceRange(double from, double to) {
+        return  repo.findInBalanceRange(to,from);
+    }
+
+    @Override
+    public void debit(double amount, String agreement) {
+        Subscription subscription=repo.getByAgreement(agreement);
+        double balance=subscription.getBalance();
+        subscription.setBalance(balance+amount);
+        repo.save(subscription);
+    }
 }
